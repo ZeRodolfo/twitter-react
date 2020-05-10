@@ -1,7 +1,11 @@
 import React from "react";
 
+// import * as Styled from "./styles";
+
+import Header from "../../components/header";
+
 function Main() {
-  return <div>Hello World!!</div>;
+  return <Header></Header>;
 }
 
 export default Main;
