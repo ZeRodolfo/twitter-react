@@ -9,13 +9,20 @@
     "@typescript-eslint/eslint-plugin": "2.x",
     "@typescript-eslint/parser": "2.x",
     "babel-preset-react-app": "^8.0.0",
+    "connected-react-router": "^6.8.0",
     "eslint-config-react-app": "^5.2.1",
     "eslint-loader": "2.1.2",
     "eslint-plugin-flowtype": "4.x",
     "eslint-plugin-react-hooks": "2.x",
+    "history": "^4.10.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-redux": "^7.2.0",
+    "react-router": "^5.1.2",
+    "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
+    "redux-saga": "^1.1.3"
   },
   "devDependencies": {
     "babel-eslint": "10.x",
@@ -26,7 +33,8 @@
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "7.x",
-    "prettier": "1.19.1"
+    "prettier": "1.19.1",
+    "redux-devtools-extension": "^2.13.8"
   },
   "babel": {
     "presets": [
@@ -35,7 +43,7 @@
   },
   "prettier": {
     "trailingComma": "es5",
-    "tabWidth": 4,
+    "tabWidth": 2,
     "semi": true,
     "singleQuote": false
   },
