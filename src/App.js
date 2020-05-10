@@ -3,11 +3,15 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./store";
 import { PersistGate } from "redux-persist/lib/integration/react";
 
+import history from "./services/history";
+
+import Routes from "./routes";
+
 function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <div className="App">Hello World!!</div>
+        <Routes history={history} />
       </PersistGate>
     </Provider>
   );
