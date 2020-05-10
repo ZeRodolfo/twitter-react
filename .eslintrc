@@ -1,0 +1,24 @@
+{
+    "extends": ["react-app","plugin:prettier/recommended", "prettier"],
+    "rules": {
+        "comma-dangle": "off",
+        "eqeqeq": ["error", "allow-null"],
+        "max-len": ["error", 200, 2],
+        "no-debugger": "error",
+        "no-fallthrough": "error",
+        "no-unreachable": "error",
+        "no-unused-vars": ["error", { "vars": "all", "args": "none" }],
+        "no-var": "error",
+        "prefer-const": "error",
+        "no-const-assign": "error",
+        "no-console": "warn",
+        // "react-hooks/exhaustive-deps": "none",
+        "no-useless-escape": "off",
+        "array-callback-return": "off",
+        "react/jsx-pascal-case": "none"
+    },
+    "parserOptions": {
+        "sourceType": "module",
+        "allowImportExportEverywhere": true
+    }
+}

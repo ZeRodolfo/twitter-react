@@ -6,9 +6,38 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@typescript-eslint/eslint-plugin": "2.x",
+    "@typescript-eslint/parser": "2.x",
+    "babel-preset-react-app": "^8.0.0",
+    "eslint-config-react-app": "^5.2.1",
+    "eslint-loader": "2.1.2",
+    "eslint-plugin-flowtype": "4.x",
+    "eslint-plugin-react-hooks": "2.x",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "10.x",
+    "eslint": "6.x",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-import": "2.x",
+    "eslint-plugin-jsx-a11y": "6.x",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "7.x",
+    "prettier": "1.19.1"
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": true,
+    "singleQuote": false
   },
   "scripts": {
     "start": "react-scripts start",
