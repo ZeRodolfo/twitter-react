@@ -65,7 +65,7 @@ function ProfilerEdit({
   ];
 
   useEffect(() => {
-    dispatch(authActions.getCurrentUser());
+    // dispatch(authActions.getCurrentUser());
     dispatch(tweetsActions.getTweetsList());
     dispatch(trendsActions.getTrendsList());
     dispatch(followActions.getFollowList());

@@ -1,5 +1,5 @@
-export function getCurrentUser() {
-  return { type: "@auth/GET_CURRENT_USER" };
+export function signIn(username, password) {
+  return { type: "@auth/SIGN_IN", payload: { username, password } };
 }
 
 export function changeCover(cover) {
