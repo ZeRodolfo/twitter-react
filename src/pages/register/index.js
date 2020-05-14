@@ -1,26 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { compose } from "recompose";
 import { withRouter } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import * as yup from "yup";
 import { Formik, Form, Field } from "formik";
-import { Link } from "react-router-dom";
 
 import * as Styled from "./styles";
 
 import { ReactComponent as Logo } from "../../assets/svg/logo.svg";
 
 import { Primary as ButtonPrimary } from "../../components/button";
-import { Secondary as InputSecondary } from "../../components/input";
+import { Field as InputField } from "../../components/input";
 
-function Login() {
-  const schema = yup.object().shape({
-    email: yup
-      .string()
-      .email("Insira um email válido. Ex.: fulanodetal@gmail.com")
-      .required("Campo obrigatório."),
-    senha: yup.string().required("Campo obrigatório."),
-  });
+import * as authActions from "../../store/modules/auth/actions";
+
+function Register({ currentUser, history }) {
+  const [isDisabledSend, setIsDisabledSend] = useState(true);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!!currentUser.username) {
+      history.push("/");
+    }
+  }, [currentUser, history]);
+
+  const schema = yup
+    .object()
+    .shape({
+      name: yup.string().required("Campo obrigatório."),
+      username: yup.string().required("Campo obrigatório."),
+      password: yup.string().required("Campo obrigatório."),
+    })
+    .when((current, schema) =>
+      schema.test({
+        test: value => {
+          const isDisabled =
+            !!value.name === false ||
+            !!value.username === false ||
+            !!value.password === false;
+
+          setIsDisabledSend(isDisabled);
+
+          return isDisabled;
+        },
+      })
+    );
 
   return (
     <Styled.Container>
@@ -32,28 +57,49 @@ function Login() {
 
         <Formik
           initialValues={{
-            email: "",
-            senha: "",
+            name: "",
+            username: "",
+            password: "",
           }}
           validationSchema={schema}
-          onSubmit={({ email, senha }, { reset }) => {
-            // dispatch(signInRequest(email, senha));
+          onSubmit={(values, { reset }) => {
+            dispatch(authActions.signUp(values));
             reset();
           }}
         >
           {() => (
             <Form>
               <Styled.Row>
-                <InputSecondary type="text" placeholder="Name" />
+                <Field
+                  component={InputField}
+                  inputType="secondary"
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                />
               </Styled.Row>
               <Styled.Row>
-                <InputSecondary type="text" placeholder="Username" />
+                <Field
+                  component={InputField}
+                  inputType="secondary"
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                />
               </Styled.Row>
               <Styled.Row>
-                <InputSecondary type="password" placeholder="Password" />
+                <Field
+                  component={InputField}
+                  inputType="secondary"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                />
               </Styled.Row>
               <Styled.ContainerButton>
-                <ButtonPrimary disabled={true}>Inscrever-se</ButtonPrimary>
+                <ButtonPrimary disabled={isDisabledSend}>
+                  Inscrever-se
+                </ButtonPrimary>
               </Styled.ContainerButton>
             </Form>
           )}
@@ -67,11 +113,13 @@ function Login() {
   );
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  currentUser: state.auth.currentUser,
+});
 
 const mapDispatchToProps = {};
 
 export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps)
-)(Login);
+)(Register);

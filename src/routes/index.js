@@ -22,7 +22,7 @@ function Routes({ history }) {
               <Route exact path="/login" history={history} component={Login} />
               <Route exact path="/register" history={history} component={Register} />
               <Route exact path="/" history={history} component={Main} />
-              <Route exact path="/users/:key" history={history} component={Main} />
+              <Route exact path="/users/:username" history={history} component={Main} />
               <Route
                 exact
                 path="/profiler/edit"

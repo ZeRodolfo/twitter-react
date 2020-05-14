@@ -2,6 +2,10 @@ export function signIn(username, password) {
   return { type: "@auth/SIGN_IN", payload: { username, password } };
 }
 
+export function signUp(payload) {
+  return { type: "@auth/SIGN_UP", payload };
+}
+
 export function changeCover(cover) {
   return {
     type: "@auth/CHANGE_COVER",

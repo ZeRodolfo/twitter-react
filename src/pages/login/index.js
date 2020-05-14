@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { compose } from "recompose";
 import { withRouter } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
@@ -14,10 +14,16 @@ import { Field as InputField } from "../../components/input";
 
 import * as authActions from "../../store/modules/auth/actions";
 
-function Login() {
+function Login({ currentUser, history }) {
   const [isDisabledSend, setIsDisabledSend] = useState(true);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!!currentUser.username) {
+      history.push("/");
+    }
+  }, [currentUser, history]);
 
   const schema = yup
     .object()
@@ -93,7 +99,9 @@ function Login() {
   );
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  currentUser: state.auth.currentUser,
+});
 
 const mapDispatchToProps = {};
 

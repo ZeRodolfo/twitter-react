@@ -67,10 +67,10 @@ function Main({
   ];
 
   useEffect(() => {
-    const key = !!match.params.key ? match.params.key : "";
+    const username = !!match.params.username ? match.params.username : "";
 
     // dispatch(authActions.getCurrentUser());
-    dispatch(userPageActions.getDataUserPage(key));
+    dispatch(userPageActions.getDataUserPage(username));
     dispatch(tweetsActions.getTweetsList());
     dispatch(trendsActions.getTrendsList());
     dispatch(followActions.getFollowList());

@@ -13,3 +13,17 @@ export const signIn = async json => {
       });
   });
 };
+
+export const signUp = async json => {
+  return new Promise((resolve, reject) => {
+    const api = API(true);
+    api
+      .post("/register", json)
+      .then(data => {
+        resolve(data);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
