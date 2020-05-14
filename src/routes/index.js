@@ -8,6 +8,7 @@ import { LastLocationProvider } from "react-router-last-location";
 import Frame from "./frame";
 
 import Main from "../pages/main";
+import ProfilerEdit from "../pages/profilerEdit";
 
 function Routes({ history }) {
   return (
@@ -17,6 +18,13 @@ function Routes({ history }) {
           <ConnectedRouter history={history}>
             <Switch>
               <Route exact path="/" history={history} component={Main} />
+              <Route exact path="/users/:key" history={history} component={Main} />
+              <Route
+                exact
+                path="/profiler/edit"
+                history={history}
+                component={ProfilerEdit}
+              />
             </Switch>
           </ConnectedRouter>
         </Frame>

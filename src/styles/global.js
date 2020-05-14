@@ -15,11 +15,15 @@ export default createGlobalStyle`
 
   body {
     -webkit-font-smoothing: antialiased !important;
-    background: #fff;
+    background: rgb(245, 248, 250);
   }
 
   button {
     cursor: pointer;
+  }
+
+  p, span, a {
+    color: rgb(101, 119, 134);
   }
 
   @media print{

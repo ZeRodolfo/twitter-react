@@ -3,10 +3,9 @@ import { notification } from "antd";
 
 import * as Styled from "./styles";
 
-const Header = ({
-  cover = "https://www.gettyimages.com.br/gi-resources/images/500px/983794168.jpg",
-  fallbackChangeCover,
-}) => {
+import Avatar from "../../components/avatar";
+
+const Header = ({ userPage, isEdit = false, fallbackChangeCover }) => {
   const fileRef = useRef();
 
   const checkAllowedExtension = event => {
@@ -22,7 +21,6 @@ const Header = ({
         .toLowerCase();
 
       if (allowedExtension.indexOf(extension) !== -1) {
-        console.log("update redux as image");
         fallbackChangeCover(file);
       } else {
         const extensionsAllowedString = allowedExtension
@@ -37,20 +35,31 @@ const Header = ({
     }
   };
 
-  return (
-    <>
-      <Styled.Container src={cover}>
+  const renderChangeCover = () => {
+    return (
+      <>
         <Styled.ChangeCover onClick={() => fileRef.current.click()}>
           Mudar capa
         </Styled.ChangeCover>
+        <Styled.InputFile
+          ref={fileRef}
+          type="file"
+          accept="image/png, image/jpeg"
+          onChange={event => checkAllowedExtension(event)}
+        />
+      </>
+    );
+  };
+
+  return (
+    <>
+      <Styled.Container src={userPage.cover}>
+        {isEdit && renderChangeCover()}
       </Styled.Container>
 
-      <Styled.InputFile
-        ref={fileRef}
-        type="file"
-        accept="image/png, image/jpeg"
-        onChange={event => checkAllowedExtension(event)}
-      />
+      <Styled.ContainerAvatar>
+        <Avatar picture={userPage.avatar} />
+      </Styled.ContainerAvatar>
     </>
   );
 };
