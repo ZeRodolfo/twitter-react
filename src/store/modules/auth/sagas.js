@@ -1,7 +1,7 @@
 import { put, all, takeLatest } from "redux-saga/effects";
 
 function* getCurrentUserSaga() {
-  yield put({
+  /*yield put({
     type: "@auth/SET_CURRENT_USER_SUCCESS",
     payload: {
       id: 1,
@@ -35,7 +35,7 @@ function* getCurrentUserSaga() {
         },
       ],
     },
-  });
+  });*/
 }
 
 function* getChangeCoverSaga({ payload }) {

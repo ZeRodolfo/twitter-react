@@ -1,13 +1,12 @@
 const INITIAL_STATE = {
   currentUser: {
-    id: null,
+    _id: null,
     cover: "",
     avatar: "",
-    name: "Goku",
-    verifiedAccount: true,
-    key: "kakaroto",
-    description:
-      "He is one of the survivors of the extinct Saiyan race. When he arrived he was a violent kid, due to his warrior nature.",
+    name: "",
+    verifiedAccount: false,
+    username: "",
+    description: "",
     followers: [],
   },
   token: "",

@@ -69,13 +69,13 @@ function Main({
   useEffect(() => {
     const key = !!match.params.key ? match.params.key : "";
 
-    dispatch(authActions.getCurrentUser());
+    // dispatch(authActions.getCurrentUser());
     dispatch(userPageActions.getDataUserPage(key));
     dispatch(tweetsActions.getTweetsList());
     dispatch(trendsActions.getTrendsList());
     dispatch(followActions.getFollowList());
     dispatch(followersActions.getFollowersList());
-  }, [match, dispatch]);
+  }, [dispatch]);
 
   // useEffect(() => {
   //   console.log("userPage", userPage);
@@ -89,20 +89,31 @@ function Main({
   //   console.log("listTweets", listTweets);
   // }, [listTweets]);
 
-  useEffect(() => {
-    console.log("listFollow", listFollow);
-  }, [listFollow]);
+  // useEffect(() => {
+  //   console.log("listFollow", listFollow);
+  // }, [listFollow]);
 
   // useEffect(() => {
   //   console.log("currentUser", currentUser);
   // }, [currentUser]);
 
   const selectUserHandle = data => {
-    dispatch(userPageActions.getDataUserPage(data.key));
+    dispatch(userPageActions.getDataUserPage(data.username));
   };
 
   const editProfilerHandle = () => {
     history.push("/profiler/edit");
+  };
+
+  const followUserHandle = () => {
+    console.log("current", currentUser);
+    if (!!currentUser.username) {
+      console.log("usuario existe");
+      history.push("/login")
+    } else {
+      console.log("usuario nao existe");
+      history.push("/login")
+    }
   };
 
   return (
@@ -133,7 +144,7 @@ function Main({
               </Styled.MenuButton>
             ) : (
               <Styled.MenuButton>
-                <ButtonLink>
+                <ButtonLink onClick={() => followUserHandle()}>
                   <Styled.ButtonText>
                     <Styled.ButtonIcon color="rgb(26, 145, 218)">
                       <FontAwesomeIcon icon={faUserPlus} />

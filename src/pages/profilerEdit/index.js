@@ -96,7 +96,7 @@ function ProfilerEdit({
   const homeHandle = () => {
     history.push("/");
   };
-  
+
   const selectUserHandle = data => {
     dispatch(userPageActions.getDataUserPage(data.key));
   };
@@ -110,10 +110,10 @@ function ProfilerEdit({
           <Styled.ContainerMenuButtons>
             <Styled.MenuButton>
               <ButtonLink>
-                <Styled.ButtonIcon color="rgb(26, 145, 218)">
-                  <FontAwesomeIcon icon={faHome} />
-                </Styled.ButtonIcon>
                 <Styled.ButtonText onClick={() => homeHandle()}>
+                  <Styled.ButtonIcon color="rgb(26, 145, 218)">
+                    <FontAwesomeIcon icon={faHome} />
+                  </Styled.ButtonIcon>
                   Home
                 </Styled.ButtonText>
               </ButtonLink>
