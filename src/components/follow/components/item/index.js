@@ -23,7 +23,7 @@ const Item = ({ data = {} }) => {
               </Styled.VerifiedAccount>
             )}
           </Styled.Details>
-          <Styled.Key>@{data.key}</Styled.Key>
+          <Styled.Key>@{data.username}</Styled.Key>
         </Styled.DetailsUser>
         <Styled.ContainerButton>
           <ButtonOutline>Follow</ButtonOutline>

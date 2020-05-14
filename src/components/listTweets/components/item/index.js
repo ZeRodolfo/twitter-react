@@ -11,7 +11,7 @@ import { ReactComponent as SendTweet } from "../../../../assets/svg/sendTweet.sv
 
 import Avatar from "../../../avatar";
 
-import urlMetadata from "open-graph-scraper";
+// import urlMetadata from "open-graph-scraper";
 
 const Item = ({ data = {}, onCLick = () => {} }) => {
   useEffect(() => {
@@ -37,22 +37,22 @@ const Item = ({ data = {}, onCLick = () => {} }) => {
   return (
     <Styled.Container>
       <Styled.ContainerAvatar>
-        <Avatar picture={data.avatar} />
+        <Avatar picture={data.owner.avatar} />
       </Styled.ContainerAvatar>
 
       <Styled.ContainerContent>
         <Styled.Details>
           <Styled.UserDetails onClick={onCLick}>
-            <Styled.Name>{data.name}</Styled.Name>
+            <Styled.Name>{data.owner.name}</Styled.Name>
             <Styled.VerifiedAccount>
               <VerifiedAccount />
             </Styled.VerifiedAccount>
-            <Styled.Key>@{data.key}</Styled.Key>
+            <Styled.Key>@{data.owner.username}</Styled.Key>
           </Styled.UserDetails>
 
           <Styled.Separator>·</Styled.Separator>
 
-          <Styled.Published>{data.published_at}</Styled.Published>
+          <Styled.Published>{data.createdAt}</Styled.Published>
         </Styled.Details>
 
         <Styled.Content>

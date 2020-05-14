@@ -1,7 +1,6 @@
 import { put, all, takeLatest } from "redux-saga/effects";
 
 function* getCurrentUserSaga() {
-  console.log("POXA")
   yield put({
     type: "@auth/SET_CURRENT_USER_SUCCESS",
     payload: {

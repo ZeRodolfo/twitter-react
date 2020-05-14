@@ -24,7 +24,7 @@ const UserDetails = ({ userPage = {} }) => {
       </Styled.Row>
 
       <Styled.Row>
-        <Styled.Key>@{userPage.key}</Styled.Key>
+        <Styled.Key>@{userPage.username}</Styled.Key>
       </Styled.Row>
 
       <Styled.Row>

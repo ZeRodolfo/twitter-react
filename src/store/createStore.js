@@ -3,7 +3,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 export default (reducers, middlewares) => {
   const enhancer =
-    process.env.ENVIRONMENT === "development"
+    process.env.NODE_ENV === "development"
       ? compose(composeWithDevTools(applyMiddleware(...middlewares)))
       : applyMiddleware(...middlewares);
 

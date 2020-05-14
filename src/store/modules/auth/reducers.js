@@ -10,6 +10,7 @@ const INITIAL_STATE = {
       "He is one of the survivors of the extinct Saiyan race. When he arrived he was a violent kid, due to his warrior nature.",
     followers: [],
   },
+  token: "",
 };
 
 export default function reducers(state = INITIAL_STATE, action) {

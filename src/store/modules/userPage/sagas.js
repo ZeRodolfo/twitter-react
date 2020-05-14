@@ -1,8 +1,10 @@
-import { put, all, takeLatest } from "redux-saga/effects";
+import { put, call, all, takeLatest } from "redux-saga/effects";
 import history from "../../../services/history";
 
+import * as repository from "./repository";
+
 function* getDataUserPageSaga({ payload }) {
-  const mockUsers = [
+  /*const mockUsers = [
     {
       id: 3,
       cover: "https://images3.alphacoders.com/888/thumb-1920-888361.png",
@@ -92,7 +94,9 @@ function* getDataUserPageSaga({ payload }) {
     user = mockUsers
       .filter(item => item.key === payload.key)
       .map(item => item)[0];
-  }
+  }*/
+
+  const { data: user } = yield call(repository.userPage, payload.key);
 
   yield put({
     type: "@userPage/SET_DATA_USER_PAGE_SUCCESS",

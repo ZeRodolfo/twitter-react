@@ -17,7 +17,7 @@ import Navbar from "../../components/navbar";
 import Search from "../../components/search";
 import Trends from "../../components/trends";
 import Follow from "../../components/follow";
-import ListTweets from "../../components/listTweets";
+// import ListTweets from "../../components/listTweets";
 
 import * as authActions from "../../store/modules/auth/actions";
 import * as userPageActions from "../../store/modules/userPage/actions";
@@ -77,21 +77,21 @@ function ProfilerEdit({
     dispatch(authActions.changeCover(url));
   };
 
-  useEffect(() => {
-    console.log("currentUser", currentUser);
-  }, [currentUser]);
+  // useEffect(() => {
+  //   console.log("currentUser", currentUser);
+  // }, [currentUser]);
 
-  useEffect(() => {
-    console.log("trends", trends);
-  }, [trends]);
+  // useEffect(() => {
+  //   console.log("trends", trends);
+  // }, [trends]);
 
-  useEffect(() => {
-    console.log("listTweets", listTweets);
-  }, [listTweets]);
+  // useEffect(() => {
+  //   console.log("listTweets", listTweets);
+  // }, [listTweets]);
 
-  useEffect(() => {
-    console.log("listFollow", listFollow);
-  }, [listFollow]);
+  // useEffect(() => {
+  //   console.log("listFollow", listFollow);
+  // }, [listFollow]);
 
   const homeHandle = () => {
     history.push("/");

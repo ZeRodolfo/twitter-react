@@ -53,7 +53,7 @@ const Header = ({ userPage, isEdit = false, fallbackChangeCover }) => {
 
   return (
     <>
-      <Styled.Container src={userPage.cover}>
+      <Styled.Container src={`${process.env.REACT_APP_API_KEY}/${userPage.cover}`}>
         {isEdit && renderChangeCover()}
       </Styled.Container>
 

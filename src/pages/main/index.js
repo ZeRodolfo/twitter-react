@@ -75,7 +75,7 @@ function Main({
     dispatch(trendsActions.getTrendsList());
     dispatch(followActions.getFollowList());
     dispatch(followersActions.getFollowersList());
-  }, [dispatch]);
+  }, [match, dispatch]);
 
   // useEffect(() => {
   //   console.log("userPage", userPage);
@@ -89,9 +89,9 @@ function Main({
   //   console.log("listTweets", listTweets);
   // }, [listTweets]);
 
-  // useEffect(() => {
-  //   console.log("listFollow", listFollow);
-  // }, [listFollow]);
+  useEffect(() => {
+    console.log("listFollow", listFollow);
+  }, [listFollow]);
 
   // useEffect(() => {
   //   console.log("currentUser", currentUser);
