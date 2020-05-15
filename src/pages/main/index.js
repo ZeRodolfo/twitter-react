@@ -106,14 +106,8 @@ function Main({
   };
 
   const followUserHandle = () => {
-    console.log("current", currentUser);
-    if (!!currentUser.username) {
-      console.log("usuario existe");
-      history.push("/login")
-    } else {
-      console.log("usuario nao existe");
-      history.push("/login")
-    }
+    const route = !!currentUser.username ? "/profiler/edit" : "/login";
+    history.push(route);
   };
 
   return (
@@ -131,7 +125,8 @@ function Main({
               </ButtonLink>
             </Styled.MenuButton> */}
 
-            {!!currentUser.id && currentUser.id === userPage.id ? (
+            {!!currentUser.username &&
+            currentUser.username === userPage.username ? (
               <Styled.MenuButton>
                 <ButtonLink>
                   <Styled.ButtonText onClick={() => editProfilerHandle()}>

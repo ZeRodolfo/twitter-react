@@ -106,20 +106,18 @@ function ProfilerEdit({
       <Header userPage={currentUser} fallbackChangeCover={changeCoverHandle} />
 
       <Styled.ContainerMenu>
-        <Navbar options={linksMenu}>
-          <Styled.ContainerMenuButtons>
-            <Styled.MenuButton>
-              <ButtonLink>
-                <Styled.ButtonText onClick={() => homeHandle()}>
-                  <Styled.ButtonIcon color="rgb(26, 145, 218)">
-                    <FontAwesomeIcon icon={faHome} />
-                  </Styled.ButtonIcon>
-                  Home
-                </Styled.ButtonText>
-              </ButtonLink>
-            </Styled.MenuButton>
-          </Styled.ContainerMenuButtons>
-        </Navbar>
+        <Styled.ContainerMenuButtons>
+          <Styled.MenuButton>
+            <ButtonLink>
+              <Styled.ButtonText onClick={() => homeHandle()}>
+                <Styled.ButtonIcon color="rgb(26, 145, 218)">
+                  <FontAwesomeIcon icon={faHome} />
+                </Styled.ButtonIcon>
+                Home
+              </Styled.ButtonText>
+            </ButtonLink>
+          </Styled.MenuButton>
+        </Styled.ContainerMenuButtons>
       </Styled.ContainerMenu>
 
       <Styled.Body>
@@ -134,10 +132,6 @@ function ProfilerEdit({
         </Styled.Aside>
 
         <Styled.Main>
-          <Styled.ContainerTweet>
-            <Tweet placeholder="What's happening" />
-          </Styled.ContainerTweet>
-
           <input type="text" />
         </Styled.Main>
 
