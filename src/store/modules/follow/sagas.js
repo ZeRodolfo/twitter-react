@@ -1,4 +1,4 @@
-import { put, call, all, takeLatest } from "redux-saga/effects";
+import { put, select, call, all, takeLatest } from "redux-saga/effects";
 
 import * as repository from "./repository";
 
@@ -40,4 +40,20 @@ function* getFollowListSaga() {
   });
 }
 
-export default all([takeLatest("@follow/GET_FOLLOW_LIST", getFollowListSaga)]);
+function* followUserSaga() {
+  const { data: userPage } = yield select(state => state.userPage);
+  const { data: currentUser } = yield call(repository.follow, userPage._id);
+
+  console.log("userPage", userPage);
+  console.log("currentUser", currentUser);
+
+  yield put({
+    type: "@auth/SET_CURRENT_USER_SUCCESS",
+    payload: currentUser,
+  });
+}
+
+export default all([
+  takeLatest("@follow/GET_FOLLOW_LIST", getFollowListSaga),
+  takeLatest("@follow/FOLLOW_USER", followUserSaga),
+]);

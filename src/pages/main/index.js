@@ -2,12 +2,18 @@ import React, { useEffect } from "react";
 import { compose } from "recompose";
 import { withRouter } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserEdit, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUserAlt,
+  faUserEdit,
+  faUserPlus,
+  faUserMinus,
+  faDoorOpen,
+  faHome,
+} from "@fortawesome/free-solid-svg-icons";
 
 import * as Styled from "./styles";
 
-import { Link as ButtonLink } from "../../components/button";
+import { Group as ButtonGroup } from "../../components/button";
 
 import Header from "../../components/header";
 import UserDetails from "../../components/userDetails";
@@ -34,7 +40,6 @@ function Main({
   listTweets,
   trends,
   listFollow,
-  listFollowers,
 }) {
   const dispatch = useDispatch();
 
@@ -66,36 +71,83 @@ function Main({
     },
   ];
 
+  const buttonsMenu = [
+    {
+      text: "Follow",
+      typeButton: "link",
+      icon: faUserPlus,
+      colorIcon: "rgb(26, 145, 218)",
+      colorButton: "rgb(101, 119, 134)",
+      onClick: () => followUserHandle(),
+      visible:
+        !!currentUser.username === false ||
+        (currentUser.username !== userPage.username &&
+          !currentUser.followers.some(
+            item => item === userPage._id
+          )),
+    },
+    {
+      text: "Unfollow",
+      typeButton: "link",
+      icon: faUserMinus,
+      colorIcon: "rgb(26, 145, 218)",
+      colorButton: "rgb(101, 119, 134)",
+      onClick: () => followUserHandle(),
+      visible:
+        !!currentUser.username === false ||
+        (currentUser.username !== userPage.username &&
+          currentUser.followers.some(
+            item => item === userPage._id
+          )),
+    },
+    {
+      text: "Home",
+      typeButton: "link",
+      icon: faHome,
+      colorIcon: "rgb(26, 145, 218)",
+      colorButton: "rgb(101, 119, 134)",
+      onClick: () => history.push("/"),
+      visible: !!currentUser.username && history.location.pathname !== "/",
+    },
+    {
+      text: "Edit Profiler",
+      typeButton: "link",
+      icon: faUserEdit,
+      colorIcon: "rgb(26, 145, 218)",
+      colorButton: "rgb(101, 119, 134)",
+      onClick: () => editProfilerHandle(),
+      visible:
+        !!currentUser.username && currentUser.username === userPage.username,
+    },
+    {
+      text: "Login",
+      typeButton: "link",
+      icon: faUserAlt,
+      colorIcon: "rgb(26, 145, 218)",
+      colorButton: "rgb(101, 119, 134)",
+      onClick: () => history.push("/login"),
+      visible: !!currentUser.username === false,
+    },
+    {
+      text: "Logout",
+      typeButton: "link",
+      icon: faDoorOpen,
+      colorIcon: "rgb(26, 145, 218)",
+      colorButton: "rgb(101, 119, 134)",
+      onClick: () => dispatch(authActions.logout()),
+      visible: !!currentUser.username,
+    },
+  ];
+
   useEffect(() => {
     const username = !!match.params.username ? match.params.username : "";
 
-    // dispatch(authActions.getCurrentUser());
     dispatch(userPageActions.getDataUserPage(username));
     dispatch(tweetsActions.getTweetsList());
     dispatch(trendsActions.getTrendsList());
     dispatch(followActions.getFollowList());
     dispatch(followersActions.getFollowersList());
-  }, [dispatch]);
-
-  // useEffect(() => {
-  //   console.log("userPage", userPage);
-  // }, [userPage]);
-
-  // useEffect(() => {
-  //   console.log("trends", trends);
-  // }, [trends]);
-
-  // useEffect(() => {
-  //   console.log("listTweets", listTweets);
-  // }, [listTweets]);
-
-  // useEffect(() => {
-  //   console.log("listFollow", listFollow);
-  // }, [listFollow]);
-
-  // useEffect(() => {
-  //   console.log("currentUser", currentUser);
-  // }, [currentUser]);
+  }, [dispatch, match]);
 
   const selectUserHandle = data => {
     dispatch(userPageActions.getDataUserPage(data.username));
@@ -106,8 +158,11 @@ function Main({
   };
 
   const followUserHandle = () => {
-    const route = !!currentUser.username ? "/profiler/edit" : "/login";
-    history.push(route);
+    if (!!currentUser.username) {
+      dispatch(followActions.followUser());
+    } else {
+      history.push("/login", { follow: userPage });
+    }
   };
 
   return (
@@ -117,38 +172,7 @@ function Main({
       <Styled.ContainerMenu>
         <Navbar options={linksMenu}>
           <Styled.ContainerMenuButtons>
-            {/* <Styled.MenuButton width={50}>
-              <ButtonLink>
-                <Styled.ButtonIcon color="rgb(101,119,134)">
-                  <FontAwesomeIcon icon={faCog} />
-                </Styled.ButtonIcon>
-              </ButtonLink>
-            </Styled.MenuButton> */}
-
-            {!!currentUser.username &&
-            currentUser.username === userPage.username ? (
-              <Styled.MenuButton>
-                <ButtonLink>
-                  <Styled.ButtonText onClick={() => editProfilerHandle()}>
-                    <Styled.ButtonIcon color="rgb(26, 145, 218)">
-                      <FontAwesomeIcon icon={faUserEdit} />
-                    </Styled.ButtonIcon>
-                    Edit Profiler
-                  </Styled.ButtonText>
-                </ButtonLink>
-              </Styled.MenuButton>
-            ) : (
-              <Styled.MenuButton>
-                <ButtonLink onClick={() => followUserHandle()}>
-                  <Styled.ButtonText>
-                    <Styled.ButtonIcon color="rgb(26, 145, 218)">
-                      <FontAwesomeIcon icon={faUserPlus} />
-                    </Styled.ButtonIcon>
-                    Follow
-                  </Styled.ButtonText>
-                </ButtonLink>
-              </Styled.MenuButton>
-            )}
+            <ButtonGroup list={buttonsMenu} />
           </Styled.ContainerMenuButtons>
         </Navbar>
       </Styled.ContainerMenu>

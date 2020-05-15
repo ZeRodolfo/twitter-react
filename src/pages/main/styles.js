@@ -20,16 +20,6 @@ export const MenuButton = styled.div`
   width: ${({ width }) => (width ? `${width}px` : "auto")};
 `;
 
-export const ButtonIcon = styled.span`
-  ${({ color }) => color && `color: ${color};`}
-  margin-right: 10px;
-`;
-
-export const ButtonText = styled.span`
-  margin-left: 10px;
-  color: rgb(101, 119, 134);
-`;
-
 export const Body = styled.section`
   width: 100%;
   height: 100%;

@@ -6,6 +6,10 @@ export function signUp(payload) {
   return { type: "@auth/SIGN_UP", payload };
 }
 
+export function logout() {
+  return { type: "@auth/LOGOUT" };
+}
+
 export function changeCover(cover) {
   return {
     type: "@auth/CHANGE_COVER",

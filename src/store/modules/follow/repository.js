@@ -12,3 +12,16 @@ export const follows = async () => {
       });
   });
 };
+
+export const follow = async id => {
+  const API = ENVIROMENT_SETUP();
+  return new Promise((resolve, reject) => {
+    API.put(`/follows/${id}`)
+      .then(data => {
+        resolve(data);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};

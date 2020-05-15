@@ -2,22 +2,19 @@ import React, { useEffect } from "react";
 import { compose } from "recompose";
 import { withRouter } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faDoorOpen } from "@fortawesome/free-solid-svg-icons";
 
 import * as Styled from "./styles";
 
-import { Link as ButtonLink } from "../../components/button";
+import { Group as ButtonGroup } from "../../components/button";
 
 import Header from "../../components/header";
 import UserDetails from "../../components/userDetails";
-import Tweet from "../../components/tweet";
 import Followers from "../../components/followers";
 import Navbar from "../../components/navbar";
 import Search from "../../components/search";
 import Trends from "../../components/trends";
 import Follow from "../../components/follow";
-// import ListTweets from "../../components/listTweets";
 
 import * as authActions from "../../store/modules/auth/actions";
 import * as userPageActions from "../../store/modules/userPage/actions";
@@ -26,46 +23,31 @@ import * as trendsActions from "../../store/modules/trends/actions";
 import * as followActions from "../../store/modules/follow/actions";
 import * as followersActions from "../../store/modules/followers/actions";
 
-function ProfilerEdit({
-  history,
-  currentUser,
-  listTweets,
-  trends,
-  listFollow,
-  listFollowers,
-}) {
+function ProfilerEdit({ history, currentUser, trends, listFollow }) {
   const dispatch = useDispatch();
 
-  const linksMenu = [
+  const buttonsMenu = [
     {
-      id: "tweets",
-      label: "Tweets",
-      value: listTweets.length,
-      onClick: () => console.log("Tweets"),
-      active: true,
+      text: "Home",
+      typeButton: "link",
+      icon: faHome,
+      colorIcon: "rgb(26, 145, 218)",
+      colorButton: "rgb(101, 119, 134)",
+      onClick: () => homeHandle(),
+      visible: !!currentUser.username && history.location.pathname !== "/",
     },
     {
-      id: "following",
-      label: "Following",
-      value: "1,123",
-      onClick: () => console.log("Following"),
-    },
-    {
-      id: "followers",
-      label: "Followers",
-      value: "2M",
-      onClick: () => console.log("Followers"),
-    },
-    {
-      id: "favorites",
-      label: "Favorites",
-      value: "20",
-      onClick: () => console.log("Favorites"),
+      text: "Logout",
+      typeButton: "link",
+      icon: faDoorOpen,
+      colorIcon: "rgb(26, 145, 218)",
+      colorButton: "rgb(101, 119, 134)",
+      onClick: () => dispatch(authActions.logout()),
+      visible: !!currentUser.username,
     },
   ];
 
   useEffect(() => {
-    // dispatch(authActions.getCurrentUser());
     dispatch(tweetsActions.getTweetsList());
     dispatch(trendsActions.getTrendsList());
     dispatch(followActions.getFollowList());
@@ -76,22 +58,6 @@ function ProfilerEdit({
     const url = URL.createObjectURL(picture);
     dispatch(authActions.changeCover(url));
   };
-
-  // useEffect(() => {
-  //   console.log("currentUser", currentUser);
-  // }, [currentUser]);
-
-  // useEffect(() => {
-  //   console.log("trends", trends);
-  // }, [trends]);
-
-  // useEffect(() => {
-  //   console.log("listTweets", listTweets);
-  // }, [listTweets]);
-
-  // useEffect(() => {
-  //   console.log("listFollow", listFollow);
-  // }, [listFollow]);
 
   const homeHandle = () => {
     history.push("/");
@@ -106,18 +72,13 @@ function ProfilerEdit({
       <Header userPage={currentUser} fallbackChangeCover={changeCoverHandle} />
 
       <Styled.ContainerMenu>
-        <Styled.ContainerMenuButtons>
-          <Styled.MenuButton>
-            <ButtonLink>
-              <Styled.ButtonText onClick={() => homeHandle()}>
-                <Styled.ButtonIcon color="rgb(26, 145, 218)">
-                  <FontAwesomeIcon icon={faHome} />
-                </Styled.ButtonIcon>
-                Home
-              </Styled.ButtonText>
-            </ButtonLink>
-          </Styled.MenuButton>
-        </Styled.ContainerMenuButtons>
+        <Navbar options={[]}>
+          <Styled.ContainerMenuButtons>
+            <Styled.MenuButton>
+              <ButtonGroup list={buttonsMenu} />
+            </Styled.MenuButton>
+          </Styled.ContainerMenuButtons>
+        </Navbar>
       </Styled.ContainerMenu>
 
       <Styled.Body>

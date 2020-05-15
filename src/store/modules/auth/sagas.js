@@ -42,6 +42,11 @@ function* getSignUpSaga({ payload }) {
   } catch (err) {}
 }
 
+function logoutSaga() {
+  localStorage.clear();
+  setTimeout(() => document.location.reload(true), 2000);
+}
+
 function* getChangeCoverSaga({ payload }) {
   yield put({
     type: "@auth/CHANGE_COVER_SUCCESS",
@@ -59,6 +64,7 @@ function* getChangeAvatarSaga({ payload }) {
 export default all([
   takeLatest("@auth/SIGN_IN", getSignInSaga),
   takeLatest("@auth/SIGN_UP", getSignUpSaga),
+  takeLatest("@auth/LOGOUT", logoutSaga),
   takeLatest("@auth/CHANGE_COVER", getChangeCoverSaga),
   takeLatest("@auth/CHANGE_AVATAR", getChangeAvatarSaga),
 ]);
