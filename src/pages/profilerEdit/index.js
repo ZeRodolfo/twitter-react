@@ -3,6 +3,8 @@ import { compose } from "recompose";
 import { withRouter } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import { faHome, faDoorOpen } from "@fortawesome/free-solid-svg-icons";
+import * as yup from "yup";
+import { Formik, Form, Field } from "formik";
 
 import * as Styled from "./styles";
 
@@ -15,6 +17,8 @@ import Navbar from "../../components/navbar";
 import Search from "../../components/search";
 import Trends from "../../components/trends";
 import Follow from "../../components/follow";
+import { Primary as ButtonPrimary } from "../../components/button";
+import { Field as InputField } from "../../components/input";
 
 import * as authActions from "../../store/modules/auth/actions";
 import * as userPageActions from "../../store/modules/userPage/actions";
@@ -47,6 +51,11 @@ function ProfilerEdit({ history, currentUser, trends, listFollow }) {
     },
   ];
 
+  const schema = yup.object().shape({
+    name: yup.string().required("Campo obrigatório."),
+    description: yup.string().required("Campo obrigatório."),
+  });
+
   useEffect(() => {
     dispatch(tweetsActions.getTweetsList());
     dispatch(trendsActions.getTrendsList());
@@ -55,8 +64,11 @@ function ProfilerEdit({ history, currentUser, trends, listFollow }) {
   }, [dispatch]);
 
   const changeCoverHandle = picture => {
-    const url = URL.createObjectURL(picture);
-    dispatch(authActions.changeCover(url));
+    dispatch(authActions.changeCover(picture));
+  };
+
+  const changeAvatarHandle = picture => {
+    dispatch(authActions.changeAvatar(picture));
   };
 
   const homeHandle = () => {
@@ -69,7 +81,12 @@ function ProfilerEdit({ history, currentUser, trends, listFollow }) {
 
   return (
     <>
-      <Header userPage={currentUser} fallbackChangeCover={changeCoverHandle} />
+      <Header
+        userPage={currentUser}
+        isEditable={true}
+        fallbackChangeCover={changeCoverHandle}
+        fallbackChangeAvatar={changeAvatarHandle}
+      />
 
       <Styled.ContainerMenu>
         <Navbar options={[]}>
@@ -93,7 +110,44 @@ function ProfilerEdit({ history, currentUser, trends, listFollow }) {
         </Styled.Aside>
 
         <Styled.Main>
-          <input type="text" />
+          <Styled.ContainerForm>
+            <Formik
+              initialValues={{
+                name: currentUser.name,
+                description: currentUser.description,
+              }}
+              validationSchema={schema}
+              onSubmit={(values, { reset }) => {
+                dispatch(authActions.savePersonalData(values));
+              }}
+            >
+              {() => (
+                <Form>
+                  <Styled.Row>
+                    <Field
+                      component={InputField}
+                      inputType="primary"
+                      type="text"
+                      name="name"
+                      placeholder="Name"
+                    />
+                  </Styled.Row>
+                  <Styled.Row>
+                    <Field
+                      component={InputField}
+                      inputType="textArea"
+                      type="textarea"
+                      name="description"
+                      placeholder="Description"
+                    />
+                  </Styled.Row>
+                  <Styled.ContainerButton>
+                    <ButtonPrimary>Save</ButtonPrimary>
+                  </Styled.ContainerButton>
+                </Form>
+              )}
+            </Formik>
+          </Styled.ContainerForm>
         </Styled.Main>
 
         <Styled.Aside width={430}>

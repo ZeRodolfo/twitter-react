@@ -1,16 +1,29 @@
 import React, { useRef } from "react";
-import { notification } from "antd";
+import validUrl from "valid-url";
 
 import * as Styled from "./styles";
 
 import Avatar from "../../components/avatar";
+import { Primary as ButtonOutline } from "../../components/button";
 
-const Header = ({ userPage, isEdit = false, fallbackChangeCover }) => {
+import checkAllowedExtensionFile from "../../utils/functions/checkAllowedExtensionFile"
+
+const Header = ({
+  userPage,
+  isEditable = false,
+  fallbackChangeCover,
+  fallbackChangeAvatar,
+}) => {
   const fileRef = useRef();
+
+  const cover = validUrl.isUri(userPage.cover)
+    ? userPage.cover
+    : `${process.env.REACT_APP_API_KEY}/${userPage.cover}`;
 
   const checkAllowedExtension = event => {
     const allowedExtension = ["jpg", "jpeg", "png", "pjpeg", "pjp"];
-    const files = event.currentTarget.files;
+    checkAllowedExtensionFile(event, allowedExtension, fallbackChangeCover)
+    /*const files = event.currentTarget.files;
 
     if (!!files.length) {
       const file = files[0];
@@ -32,14 +45,16 @@ const Header = ({ userPage, isEdit = false, fallbackChangeCover }) => {
           description: `A extensão informada não é compatível com as extensões permitidas: ${extensionsAllowedString}.`,
         });
       }
-    }
+    }*/
   };
 
   const renderChangeCover = () => {
     return (
       <>
-        <Styled.ChangeCover onClick={() => fileRef.current.click()}>
-          Mudar capa
+        <Styled.ChangeCover>
+          <ButtonOutline onClick={() => fileRef.current.click()}>
+            Change cover
+          </ButtonOutline>
         </Styled.ChangeCover>
         <Styled.InputFile
           ref={fileRef}
@@ -53,12 +68,16 @@ const Header = ({ userPage, isEdit = false, fallbackChangeCover }) => {
 
   return (
     <>
-      <Styled.Container src={`${process.env.REACT_APP_API_KEY}/${userPage.cover}`}>
-        {isEdit && renderChangeCover()}
+      <Styled.Container src={cover}>
+        {isEditable && renderChangeCover()}
       </Styled.Container>
 
       <Styled.ContainerAvatar>
-        <Avatar picture={userPage.avatar} />
+        <Avatar
+          picture={userPage.avatar}
+          isEditable={isEditable}
+          fallbackChangePicture={fallbackChangeAvatar}
+        />
       </Styled.ContainerAvatar>
     </>
   );

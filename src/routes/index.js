@@ -7,11 +7,12 @@ import { LastLocationProvider } from "react-router-last-location";
 
 import Frame from "./frame";
 
+import Explore from "../pages/explore";
 import Login from "../pages/login";
 import Register from "../pages/register";
-import Main from "../pages/main";
+import UserPage from "../pages/userPage";
 import ProfilerEdit from "../pages/profilerEdit";
-
+ 
 function Routes({ history }) {
   return (
     <BrowserRouter>
@@ -20,9 +21,19 @@ function Routes({ history }) {
           <ConnectedRouter history={history}>
             <Switch>
               <Route exact path="/login" history={history} component={Login} />
-              <Route exact path="/register" history={history} component={Register} />
-              <Route exact path="/" history={history} component={Main} />
-              <Route exact path="/users/:username" history={history} component={Main} />
+              <Route
+                exact
+                path="/register"
+                history={history}
+                component={Register}
+              />
+              <Route exact path="/" history={history} component={Explore} />
+              <Route
+                exact
+                path="/users/:username"
+                history={history}
+                component={UserPage}
+              />
               <Route
                 exact
                 path="/profiler/edit"

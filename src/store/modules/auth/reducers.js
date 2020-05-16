@@ -29,13 +29,19 @@ export default function reducers(state = INITIAL_STATE, action) {
     case "@auth/CHANGE_COVER_SUCCESS":
       return {
         ...state,
-        cover: action.payload,
+        currentUser: {
+          ...state.currentUser,
+          cover: action.payload,
+        },
       };
 
     case "@auth/CHANGE_AVATAR_SUCCESS":
       return {
         ...state,
-        avatar: action.payload,
+        currentUser: {
+          ...state.currentUser,
+          avatar: action.payload,
+        },
       };
 
     default:

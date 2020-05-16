@@ -1,5 +1,6 @@
 {
     "extends": ["react-app","plugin:prettier/recommended", "prettier"],
+    "plugins": ["react-hooks"],
     "rules": {
         "comma-dangle": "off",
         "eqeqeq": ["error", "allow-null"],
@@ -12,10 +13,11 @@
         "prefer-const": "error",
         "no-const-assign": "error",
         "no-console": "warn",
-        // "react-hooks/exhaustive-deps": "none",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
         "no-useless-escape": "off",
         "array-callback-return": "off",
-        "react/jsx-pascal-case": "none"
+        "react/jsx-pascal-case": "0"
     },
     "parserOptions": {
         "sourceType": "module",

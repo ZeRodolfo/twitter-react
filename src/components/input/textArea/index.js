@@ -2,7 +2,13 @@ import React, { useEffect, useRef } from "react";
 
 import * as Styled from "./styles";
 
-const TextArea = ({ children, isAutoExpand = false, ...rest }) => {
+const TextArea = ({
+  children,
+  reset = false,
+  isAutoExpand = false,
+  value,
+  ...rest
+}) => {
   const ref = useRef();
 
   useEffect(() => {
@@ -25,9 +31,15 @@ const TextArea = ({ children, isAutoExpand = false, ...rest }) => {
     field.style.height = height + "px";
   };
 
+  useEffect(() => {
+    if (reset) {
+      ref.current.style.height = "auto";
+    }
+  }, [reset]);
+
   return (
     <Styled.Container>
-      <Styled.TextArea ref={ref} {...rest}>
+      <Styled.TextArea ref={ref} {...rest} value={value}>
         {children}
       </Styled.TextArea>
     </Styled.Container>

@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
   list: [],
+  clearTweetContent: false,
 };
 
 export default function reducers(state = INITIAL_STATE, action) {
@@ -8,6 +9,12 @@ export default function reducers(state = INITIAL_STATE, action) {
       return {
         ...state,
         list: action.payload,
+      };
+
+    case "@tweets/SET_CLEAR_TWEET_SUCCESS":
+      return {
+        ...state,
+        clearTweetContent: action.payload
       };
 
     default:

@@ -5,20 +5,23 @@ import { connect, useDispatch } from "react-redux";
 
 import * as Styled from "./styles";
 
-import { ReactComponent as Logo } from "../../assets/svg/logo.svg";
-
 import FormLogin from "../../components/formLogin";
+import ListTweets from "../../components/listTweets";
 
+import * as userPageActions from "../../store/modules/userPage/actions";
 import * as authActions from "../../store/modules/auth/actions";
+import * as tweetsActions from "../../store/modules/tweets/actions";
 
-function Login({ currentUser, history }) {
+function Explore({ history, currentUser, listTweets }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!!currentUser.username) {
-      history.push("/");
-    }
-  }, [currentUser, history]);
+    dispatch(tweetsActions.getTweetsList());
+  }, [dispatch]);
+
+  const selectUserHandle = data => {
+    dispatch(userPageActions.getDataUserPage(data.username));
+  };
 
   const submitFormHandle = (username, password) => {
     dispatch(authActions.signIn(username, password));
@@ -26,26 +29,26 @@ function Login({ currentUser, history }) {
 
   return (
     <Styled.Container>
-      <Styled.Box>
-        <Styled.ContainerLogo>
-          <Logo />
-        </Styled.ContainerLogo>
+      <Styled.ContainerTweets>
+        <Styled.Topic>Explore</Styled.Topic>
+        <ListTweets list={listTweets} fallbackSelectUser={selectUserHandle} />
+      </Styled.ContainerTweets>
+      <Styled.ContainerLogin>
         <Styled.Title>Entrar no Twitter</Styled.Title>
-
         <FormLogin fallbackSubmit={submitFormHandle} />
-
         <Styled.ContainerLink>
-          <Styled.Link to="/login">Esqueceu sua senha?</Styled.Link>
+          <Styled.Link to="/">Esqueceu sua senha?</Styled.Link>
           <Styled.Divider>·</Styled.Divider>
           <Styled.Link to="/register">Inscrever-se no Twitter</Styled.Link>
         </Styled.ContainerLink>
-      </Styled.Box>
+      </Styled.ContainerLogin>
     </Styled.Container>
   );
 }
 
 const mapStateToProps = state => ({
   currentUser: state.auth.currentUser,
+  listTweets: state.tweets.list,
 });
 
 const mapDispatchToProps = {};
@@ -53,4 +56,4 @@ const mapDispatchToProps = {};
 export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps)
-)(Login);
+)(Explore);

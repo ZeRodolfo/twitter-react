@@ -10,7 +10,7 @@ const ListTweets = ({ list = [], fallbackSelectUser = () => {} }) => {
       <Item
         key={`list_tweets_${index}`}
         data={item}
-        onClick={() => fallbackSelectUser(item)}
+        fallbackSelectUser={(value) => fallbackSelectUser(value)}
       />
     ));
   };

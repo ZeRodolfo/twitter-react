@@ -8,10 +8,6 @@ export const Container = styled.header`
   position: relative;
   z-index: 1;
 
-  :hover button {
-    display: block;
-  }
-
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -23,11 +19,15 @@ export const Container = styled.header`
   `}
 `;
 
-export const ChangeCover = styled.button`
+export const ChangeCover = styled.div`
   position: absolute;
   top: 15px;
   right: 50px;
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  max-width: 150px;
+  width: 100%;
 `;
 
 export const InputFile = styled.input`

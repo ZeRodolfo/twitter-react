@@ -20,15 +20,6 @@ export const MenuButton = styled.div`
   width: ${({ width }) => (width ? `${width}px` : "auto")};
 `;
 
-export const ButtonIcon = styled.span`
-  ${({ color }) => color && `color: ${color};`}
-`;
-
-export const ButtonText = styled.span`
-  margin-left: 10px;
-  color: rgb(101, 119, 134);
-`;
-
 export const Body = styled.section`
   width: 100%;
   height: 100%;
@@ -66,25 +57,36 @@ export const ContainerFollow = styled.div`
   margin-top: 15px;
 `;
 
-export const ContainerTweet = styled.div`
-  margin: 0px 0px;
-  padding-bottom: 10px;
-  background: rgb(230, 236, 240);
-`;
-
 export const Main = styled.section`
   width: 100%;
   max-width: calc(100% - 750px);
   min-height: calc(100vh - 213px);
   height: auto;
-  padding: 0px;
   background: #fff;
+  padding: 40px;
   border: 1px solid rgb(230, 236, 240);
   border-top: none;
   border-bottom: none;
 `;
 
-export const ContainerTweets = styled.section`
-  background: #fff;
-  padding: 0px;
+export const ContainerForm = styled.div`
+  padding: 40px;
+  background: rgb(245, 248, 250);
+`;
+
+export const Row = styled.div`
+  width: 100%;
+  margin-bottom: 15px;
+`;
+
+export const ContainerButton = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  button {
+    width: 100%;
+  }
 `;

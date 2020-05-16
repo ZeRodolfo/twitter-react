@@ -12,3 +12,16 @@ export const tweets = async id => {
       });
   });
 };
+
+export const postTweet = async content => {
+  const API = ENVIROMENT_SETUP();
+  return new Promise((resolve, reject) => {
+    API.post(`/tweets`, { content })
+      .then(data => {
+        resolve(data);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};

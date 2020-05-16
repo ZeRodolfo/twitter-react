@@ -32,7 +32,7 @@ import * as trendsActions from "../../store/modules/trends/actions";
 import * as followActions from "../../store/modules/follow/actions";
 import * as followersActions from "../../store/modules/followers/actions";
 
-function Main({
+function UserPage({
   history,
   match,
   currentUser,
@@ -40,6 +40,7 @@ function Main({
   listTweets,
   trends,
   listFollow,
+  clearTweetContent,
 }) {
   const dispatch = useDispatch();
 
@@ -82,9 +83,7 @@ function Main({
       visible:
         !!currentUser.username === false ||
         (currentUser.username !== userPage.username &&
-          !currentUser.followers.some(
-            item => item === userPage._id
-          )),
+          !currentUser.followers.some(item => item === userPage._id)),
     },
     {
       text: "Unfollow",
@@ -94,11 +93,9 @@ function Main({
       colorButton: "rgb(101, 119, 134)",
       onClick: () => followUserHandle(),
       visible:
-        !!currentUser.username === false ||
-        (currentUser.username !== userPage.username &&
-          currentUser.followers.some(
-            item => item === userPage._id
-          )),
+        !!currentUser.username &&
+        currentUser.username !== userPage.username &&
+          currentUser.followers.some(item => item === userPage._id),
     },
     {
       text: "Home",
@@ -106,8 +103,15 @@ function Main({
       icon: faHome,
       colorIcon: "rgb(26, 145, 218)",
       colorButton: "rgb(101, 119, 134)",
-      onClick: () => history.push("/"),
-      visible: !!currentUser.username && history.location.pathname !== "/",
+      onClick: () =>
+        history.push(
+          !!currentUser.username ? `/users/${currentUser.username}` : "/"
+        ),
+      visible:
+        !!currentUser.username &&
+        ["/", `/users/${currentUser.username}`].indexOf(
+          history.location.pathname
+        ) === -1,
     },
     {
       text: "Edit Profiler",
@@ -147,7 +151,9 @@ function Main({
     dispatch(trendsActions.getTrendsList());
     dispatch(followActions.getFollowList());
     dispatch(followersActions.getFollowersList());
-  }, [dispatch, match]);
+
+    // eslint-disable-next-line
+  }, [dispatch]);
 
   const selectUserHandle = data => {
     dispatch(userPageActions.getDataUserPage(data.username));
@@ -164,6 +170,8 @@ function Main({
       history.push("/login", { follow: userPage });
     }
   };
+
+  const postTweetTextHandle = text => dispatch(tweetsActions.postTweet(text));
 
   return (
     <>
@@ -190,7 +198,11 @@ function Main({
 
         <Styled.Main>
           <Styled.ContainerTweet>
-            <Tweet placeholder="What's happening" />
+            <Tweet
+              placeholder="What's happening"
+              clearContent={clearTweetContent}
+              fallbackTweetText={postTweetTextHandle}
+            />
           </Styled.ContainerTweet>
           <Styled.ContainerTweets>
             <ListTweets
@@ -227,6 +239,7 @@ const mapStateToProps = state => ({
   trends: state.trends.list,
   listFollow: state.follow.list,
   listFollowers: state.followers.list,
+  clearTweetContent: state.tweets.clearTweetContent,
 });
 
 const mapDispatchToProps = {};
@@ -234,4 +247,4 @@ const mapDispatchToProps = {};
 export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps)
-)(Main);
+)(UserPage);
