@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { compose } from "recompose";
 import { withRouter } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
@@ -11,17 +11,13 @@ import FormLogin from "../../components/formLogin";
 
 import * as authActions from "../../store/modules/auth/actions";
 
-function Login({ currentUser, history }) {
+function Login({ history }) {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (!!currentUser.username) {
-      history.push("/");
-    }
-  }, [currentUser, history]);
-
   const submitFormHandle = (username, password) => {
-    dispatch(authActions.signIn(username, password));
+    const { follow } = history.location.state || {};
+
+    dispatch(authActions.signIn(username, password, follow));
   };
 
   return (
@@ -37,16 +33,21 @@ function Login({ currentUser, history }) {
         <Styled.ContainerLink>
           <Styled.Link to="/login">Esqueceu sua senha?</Styled.Link>
           <Styled.Divider>·</Styled.Divider>
-          <Styled.Link to="/register">Inscrever-se no Twitter</Styled.Link>
+          <Styled.Link
+            to={{
+              pathname: "/register",
+              query: { follow: history.location.state.follow || {} },
+            }}
+          >
+            Inscrever-se no Twitter
+          </Styled.Link>
         </Styled.ContainerLink>
       </Styled.Box>
     </Styled.Container>
   );
 }
 
-const mapStateToProps = state => ({
-  currentUser: state.auth.currentUser,
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = {};
 

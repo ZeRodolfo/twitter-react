@@ -1,4 +1,4 @@
-import { put, call, select, all, takeLatest } from "redux-saga/effects";
+import { put, call, select, take, all, takeLatest } from "redux-saga/effects";
 import { notification } from "antd";
 
 import * as repository from "./repository";
@@ -20,7 +20,19 @@ function* getSignInSaga({ payload }) {
       payload: user,
     });
 
-    history.push(`/users/${user.username}`);
+    if (!!payload.follow) {
+      yield put({
+        type: "@userPage/SET_DATA_USER_PAGE_SUCCESS",
+        payload: payload.follow,
+      });
+
+      yield put({ type: "@follow/FOLLOW_USER" });
+      yield take("@auth/SET_CURRENT_USER_SUCCESS");
+
+      history.push(`/users/${payload.follow.username}`);
+    } else {
+      history.push(`/users/${user.username}`);
+    }
   } catch (err) {
     notification.success({
       message: "Attention",
@@ -44,7 +56,19 @@ function* getSignUpSaga({ payload }) {
       payload: user,
     });
 
-    history.push("/");
+    if (!!payload.follow) {
+      yield put({
+        type: "@userPage/SET_DATA_USER_PAGE_SUCCESS",
+        payload: payload.follow,
+      });
+
+      yield put({ type: "@follow/FOLLOW_USER" });
+      yield take("@auth/SET_CURRENT_USER_SUCCESS");
+
+      history.push(`/users/${payload.follow.username}`);
+    } else {
+      history.push(`/users/${user.username}`);
+    }
   } catch (err) {
     notification.success({
       message: "Attention",
@@ -55,7 +79,7 @@ function* getSignUpSaga({ payload }) {
 
 function logoutSaga() {
   localStorage.clear();
-  history.push("/")
+  document.location.reload(true);
 }
 
 function* savePersonalDataSaga({ payload }) {

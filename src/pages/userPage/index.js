@@ -95,7 +95,7 @@ function UserPage({
       visible:
         !!currentUser.username &&
         currentUser.username !== userPage.username &&
-          currentUser.followers.some(item => item === userPage._id),
+        currentUser.followers.some(item => item === userPage._id),
     },
     {
       text: "Home",
@@ -105,7 +105,8 @@ function UserPage({
       colorButton: "rgb(101, 119, 134)",
       onClick: () =>
         history.push(
-          !!currentUser.username ? `/users/${currentUser.username}` : "/"
+          !!currentUser.username ? `/users/${currentUser.username}` : "/",
+          { username: currentUser.username }
         ),
       visible:
         !!currentUser.username &&
@@ -145,15 +146,15 @@ function UserPage({
 
   useEffect(() => {
     const username = !!match.params.username ? match.params.username : "";
-
-    dispatch(userPageActions.getDataUserPage(username));
-    dispatch(tweetsActions.getTweetsList());
-    dispatch(trendsActions.getTrendsList());
-    dispatch(followActions.getFollowList());
-    dispatch(followersActions.getFollowersList());
-
+    if (username !== userPage.username) {
+      dispatch(userPageActions.getDataUserPage(username));
+      dispatch(tweetsActions.getTweetsList());
+      dispatch(trendsActions.getTrendsList());
+      dispatch(followActions.getFollowList());
+      dispatch(followersActions.getFollowersList());
+    }
     // eslint-disable-next-line
-  }, [dispatch]);
+  }, [match]);
 
   const selectUserHandle = data => {
     dispatch(userPageActions.getDataUserPage(data.username));

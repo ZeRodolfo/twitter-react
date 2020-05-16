@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { compose } from "recompose";
 import { withRouter } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
@@ -14,16 +14,10 @@ import { Field as InputField } from "../../components/input";
 
 import * as authActions from "../../store/modules/auth/actions";
 
-function Register({ currentUser, history }) {
+function Register({ history, match }) {
   const [isDisabledSend, setIsDisabledSend] = useState(true);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!!currentUser.username) {
-      history.push("/");
-    }
-  }, [currentUser, history]);
 
   const schema = yup
     .object()
@@ -62,9 +56,9 @@ function Register({ currentUser, history }) {
             password: "",
           }}
           validationSchema={schema}
-          onSubmit={(values, { reset }) => {
-            dispatch(authActions.signUp(values));
-            reset();
+          onSubmit={values => {
+            const { follow } = history.location.query || {};
+            dispatch(authActions.signUp({ ...values, follow }));
           }}
         >
           {() => (
@@ -113,9 +107,7 @@ function Register({ currentUser, history }) {
   );
 }
 
-const mapStateToProps = state => ({
-  currentUser: state.auth.currentUser,
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = {};
 

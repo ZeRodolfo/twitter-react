@@ -1,5 +1,5 @@
-export function signIn(username, password) {
-  return { type: "@auth/SIGN_IN", payload: { username, password } };
+export function signIn(username, password, follow = null) {
+  return { type: "@auth/SIGN_IN", payload: { username, password, follow } };
 }
 
 export function signUp(payload) {
