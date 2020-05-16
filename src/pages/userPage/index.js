@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { compose } from "recompose";
 import { withRouter } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
@@ -42,6 +42,8 @@ function UserPage({
   listFollow,
   clearTweetContent,
 }) {
+  const [currentTab, setCurrentTab] = useState("tweets");
+
   const dispatch = useDispatch();
 
   const linksMenu = [
@@ -49,26 +51,26 @@ function UserPage({
       id: "tweets",
       label: "Tweets",
       value: listTweets.length,
-      onClick: () => console.log("Tweets"),
+      onClick: () => setCurrentTab("tweets"),
       active: true,
     },
     {
       id: "following",
       label: "Following",
       value: "1,123",
-      onClick: () => console.log("Following"),
+      onClick: () => setCurrentTab("following"),
     },
     {
       id: "followers",
       label: "Followers",
       value: "2M",
-      onClick: () => console.log("Followers"),
+      onClick: () => setCurrentTab("followers"),
     },
     {
       id: "favorites",
       label: "Favorites",
       value: "20",
-      onClick: () => console.log("Favorites"),
+      onClick: () => setCurrentTab("favorites"),
     },
   ];
 
@@ -174,6 +176,45 @@ function UserPage({
 
   const postTweetTextHandle = text => dispatch(tweetsActions.postTweet(text));
 
+  const renderTabs = () => {
+    switch (currentTab) {
+      case "tweets":
+        return (
+          <>
+            {!!currentUser.username &&
+              currentUser.username === userPage.username && (
+                <Styled.ContainerTweet>
+                  <Tweet
+                    placeholder="What's happening"
+                    clearContent={clearTweetContent}
+                    fallbackTweetText={postTweetTextHandle}
+                  />
+                </Styled.ContainerTweet>
+              )}
+
+            <Styled.ContainerTweets>
+              <ListTweets
+                list={listTweets}
+                fallbackSelectUser={selectUserHandle}
+              />
+            </Styled.ContainerTweets>
+          </>
+        );
+
+      case "following":
+        return <>Following</>;
+
+      case "followers":
+        return <>Followers</>;
+
+      case "favorites":
+        return <>Favorites</>;
+
+      default:
+        return <>Nothing!!</>;
+    }
+  };
+
   return (
     <>
       <Header userPage={userPage} />
@@ -197,21 +238,7 @@ function UserPage({
           </Styled.ContainerUserDetails>
         </Styled.Aside>
 
-        <Styled.Main>
-          <Styled.ContainerTweet>
-            <Tweet
-              placeholder="What's happening"
-              clearContent={clearTweetContent}
-              fallbackTweetText={postTweetTextHandle}
-            />
-          </Styled.ContainerTweet>
-          <Styled.ContainerTweets>
-            <ListTweets
-              list={listTweets}
-              fallbackSelectUser={selectUserHandle}
-            />
-          </Styled.ContainerTweets>
-        </Styled.Main>
+        <Styled.Main>{renderTabs()}</Styled.Main>
 
         <Styled.Aside width={430}>
           <Styled.ContainerRight>

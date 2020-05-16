@@ -3,10 +3,12 @@ import validUrl from "valid-url";
 
 import * as Styled from "./styles";
 
+import DefaultCover from "../../assets/png/default-cover.png";
+
 import Avatar from "../../components/avatar";
 import { Primary as ButtonOutline } from "../../components/button";
 
-import checkAllowedExtensionFile from "../../utils/functions/checkAllowedExtensionFile"
+import checkAllowedExtensionFile from "../../utils/functions/checkAllowedExtensionFile";
 
 const Header = ({
   userPage,
@@ -18,34 +20,13 @@ const Header = ({
 
   const cover = validUrl.isUri(userPage.cover)
     ? userPage.cover
-    : `${process.env.REACT_APP_API_KEY}/${userPage.cover}`;
+    : !!userPage.cover
+    ? `${process.env.REACT_APP_API_KEY}/${userPage.cover}`
+    : DefaultCover;
 
   const checkAllowedExtension = event => {
     const allowedExtension = ["jpg", "jpeg", "png", "pjpeg", "pjp"];
-    checkAllowedExtensionFile(event, allowedExtension, fallbackChangeCover)
-    /*const files = event.currentTarget.files;
-
-    if (!!files.length) {
-      const file = files[0];
-      const filename = file.name.toLowerCase();
-      const extension = filename
-        .split(".")
-        .pop()
-        .toLowerCase();
-
-      if (allowedExtension.indexOf(extension) !== -1) {
-        fallbackChangeCover(file);
-      } else {
-        const extensionsAllowedString = allowedExtension
-          .join(", ")
-          .toUpperCase();
-
-        notification.warn({
-          message: "Atenção",
-          description: `A extensão informada não é compatível com as extensões permitidas: ${extensionsAllowedString}.`,
-        });
-      }
-    }*/
+    checkAllowedExtensionFile(event, allowedExtension, fallbackChangeCover);
   };
 
   const renderChangeCover = () => {

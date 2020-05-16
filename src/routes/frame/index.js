@@ -1,7 +1,25 @@
 import React from "react";
+import { connect } from "react-redux";
 
-function Frame({ children }) {
-  return <>{children}</>;
+import Loading from "../../components/loading"
+
+function Frame({ children, loading }) {
+  const renderLoading = () => {
+    return loading && <Loading />;
+  };
+
+  return (
+    <>
+      {renderLoading()}
+      {children}
+    </>
+  );
 }
 
-export default Frame;
+const mapStateToProps = state => ({
+  loading: state.utilities.loading,
+});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Frame);

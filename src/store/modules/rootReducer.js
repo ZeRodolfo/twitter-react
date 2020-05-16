@@ -9,6 +9,7 @@ import tweets from "./tweets/reducers";
 import trends from "./trends/reducers";
 import follow from "./follow/reducers";
 import followers from "./followers/reducers";
+import utilities from "./utilities/reducers";
 
 export default combineReducers({
   auth,
@@ -17,5 +18,6 @@ export default combineReducers({
   trends,
   follow,
   followers,
+  utilities,
   router: connectRouter(history),
 });

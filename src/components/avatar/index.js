@@ -3,14 +3,18 @@ import validUrl from "valid-url";
 
 import * as Styled from "./styles";
 
-import checkAllowedExtensionFile from "../../utils/functions/checkAllowedExtensionFile"
+import DefaultAvatar from "../../assets/png/default-avatar.png";
+
+import checkAllowedExtensionFile from "../../utils/functions/checkAllowedExtensionFile";
 
 const Avatar = ({ picture, isEditable = false, fallbackChangePicture }) => {
   const fileRef = useRef();
 
   const avatar = validUrl.isUri(picture)
     ? picture
-    : `${process.env.REACT_APP_API_KEY}/${picture}`;
+    : !!picture
+    ? `${process.env.REACT_APP_API_KEY}/${picture}`
+    : DefaultAvatar;
 
   const renderChangePicture = () => {
     isEditable && fileRef.current.click();
@@ -18,8 +22,8 @@ const Avatar = ({ picture, isEditable = false, fallbackChangePicture }) => {
 
   const checkAllowedExtension = event => {
     const allowedExtension = ["jpg", "jpeg", "png", "pjpeg", "pjp"];
-    checkAllowedExtensionFile(event, allowedExtension, fallbackChangePicture)
-  }
+    checkAllowedExtensionFile(event, allowedExtension, fallbackChangePicture);
+  };
 
   return (
     <>

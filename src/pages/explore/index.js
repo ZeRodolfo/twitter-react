@@ -12,7 +12,7 @@ import * as userPageActions from "../../store/modules/userPage/actions";
 import * as authActions from "../../store/modules/auth/actions";
 import * as tweetsActions from "../../store/modules/tweets/actions";
 
-function Explore({ history, currentUser, listTweets }) {
+function Explore({ name = "Hooks", history, currentUser, listTweets }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,13 +34,17 @@ function Explore({ history, currentUser, listTweets }) {
         <ListTweets list={listTweets} fallbackSelectUser={selectUserHandle} />
       </Styled.ContainerTweets>
       <Styled.ContainerLogin>
-        <Styled.Title>Entrar no Twitter</Styled.Title>
-        <FormLogin fallbackSubmit={submitFormHandle} />
-        <Styled.ContainerLink>
-          <Styled.Link to="/">Esqueceu sua senha?</Styled.Link>
-          <Styled.Divider>·</Styled.Divider>
-          <Styled.Link to="/register">Inscrever-se no Twitter</Styled.Link>
-        </Styled.ContainerLink>
+        {!!currentUser.username === false && (
+          <>
+            <Styled.Title>Entrar no Twitter</Styled.Title>
+            <FormLogin fallbackSubmit={submitFormHandle} />
+            <Styled.ContainerLink>
+              <Styled.Link to="/">Esqueceu sua senha?</Styled.Link>
+              <Styled.Divider>·</Styled.Divider>
+              <Styled.Link to="/register">Inscrever-se no Twitter</Styled.Link>
+            </Styled.ContainerLink>
+          </>
+        )}
       </Styled.ContainerLogin>
     </Styled.Container>
   );

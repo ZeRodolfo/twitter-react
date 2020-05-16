@@ -1,23 +1,58 @@
 import { put, select, call, all, takeLatest } from "redux-saga/effects";
+import { notification } from "antd";
 
 import * as repository from "./repository";
 
 function* getFollowListSaga() {
-  const { data: follows } = yield call(repository.follows);
+  yield put({
+    type: "@utilities/LOADING",
+    payload: { loading: true },
+  });
+
+  try {
+    const { data: follows } = yield call(repository.follows);
+
+    yield put({
+      type: "@follow/SET_FOLLOW_LIST_SUCCESS",
+      payload: follows,
+    });
+  } catch (err) {
+    notification.error({
+      message: "Attention",
+      description: err.message,
+    });
+  }
 
   yield put({
-    type: "@follow/SET_FOLLOW_LIST_SUCCESS",
-    payload: follows,
+    type: "@utilities/LOADING",
+    payload: { loading: false },
   });
 }
 
 function* followUserSaga() {
-  const { data: userPage } = yield select(state => state.userPage);
-  const { data: currentUser } = yield call(repository.follow, userPage._id);
+  yield put({
+    type: "@utilities/LOADING",
+    payload: { loading: true },
+  });
+
+  try {
+    const { data: userPage } = yield select(state => state.userPage);
+    const { data: currentUser } = yield call(repository.follow, userPage._id);
+
+    yield put({
+      type: "@auth/SET_CURRENT_USER_SUCCESS",
+      payload: currentUser,
+    });
+  } catch (err) {
+    notification.error({
+      message: "Attention",
+      description: err.message,
+    });
+  }
 
   yield put({
-    type: "@auth/SET_CURRENT_USER_SUCCESS",
-    payload: currentUser,
+    type: "@utilities/LOADING",
+    payload: { loading: false },
   });
 }
 

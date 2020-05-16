@@ -26,7 +26,6 @@
     "history": "^4.10.1",
     "moment": "^2.25.3",
     "open-graph-scraper": "^3.6.2",
-    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-linkify": "^1.0.0-alpha",

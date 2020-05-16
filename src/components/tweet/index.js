@@ -25,9 +25,8 @@ const Tweet = ({ placeholder, clearContent = false, fallbackTweetText }) => {
           reset={clearContent}
           isAutoExpand={true}
           onChange={e => setTweetText(e.target.value)}
-        >
-          {tweetText}
-        </TextArea>
+          value={tweetText}
+        />
       </Styled.ContainerText>
 
       <Styled.Footer>

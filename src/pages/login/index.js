@@ -36,7 +36,11 @@ function Login({ history }) {
           <Styled.Link
             to={{
               pathname: "/register",
-              query: { follow: history.location.state.follow || {} },
+              query: {
+                follow:
+                  (!!history.location.state && history.location.state.follow) ||
+                  {},
+              },
             }}
           >
             Inscrever-se no Twitter
