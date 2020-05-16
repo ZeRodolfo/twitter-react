@@ -6,6 +6,11 @@ import * as repository from "./repository";
 import history from "../../../services/history";
 
 function* getSignInSaga({ payload }) {
+  yield put({
+    type: "@utilities/LOADING",
+    payload: { loading: true },
+  });
+
   try {
     const { headers, data: user } = yield call(repository.signIn, payload);
     const token = headers["access-token"];
@@ -34,14 +39,24 @@ function* getSignInSaga({ payload }) {
       history.push(`/users/${user.username}`);
     }
   } catch (err) {
-    notification.success({
+    notification.error({
       message: "Attention",
       description: err.message,
     });
   }
+
+  yield put({
+    type: "@utilities/LOADING",
+    payload: { loading: false },
+  });
 }
 
 function* getSignUpSaga({ payload }) {
+  yield put({
+    type: "@utilities/LOADING",
+    payload: { loading: true },
+  });
+
   try {
     const { headers, data: user } = yield call(repository.signUp, payload);
     const token = headers["access-token"];
@@ -70,11 +85,16 @@ function* getSignUpSaga({ payload }) {
       history.push(`/users/${user.username}`);
     }
   } catch (err) {
-    notification.success({
+    notification.error({
       message: "Attention",
       description: err.message,
     });
   }
+
+  yield put({
+    type: "@utilities/LOADING",
+    payload: { loading: false },
+  });
 }
 
 function logoutSaga() {
@@ -83,6 +103,11 @@ function logoutSaga() {
 }
 
 function* savePersonalDataSaga({ payload }) {
+  yield put({
+    type: "@utilities/LOADING",
+    payload: { loading: true },
+  });
+
   try {
     const { currentUser } = yield select(state => state.auth);
     const { data: user } = yield call(repository.savePersonalData, payload);
@@ -106,9 +131,19 @@ function* savePersonalDataSaga({ payload }) {
       description: err.message,
     });
   }
+
+  yield put({
+    type: "@utilities/LOADING",
+    payload: { loading: false },
+  });
 }
 
 function* getChangeCoverSaga({ payload }) {
+  yield put({
+    type: "@utilities/LOADING",
+    payload: { loading: true },
+  });
+
   try {
     const { data: user } = yield call(repository.saveCover, payload);
 
@@ -133,9 +168,19 @@ function* getChangeCoverSaga({ payload }) {
       description: err.message,
     });
   }
+
+  yield put({
+    type: "@utilities/LOADING",
+    payload: { loading: false },
+  });
 }
 
 function* getChangeAvatarSaga({ payload }) {
+  yield put({
+    type: "@utilities/LOADING",
+    payload: { loading: true },
+  });
+
   try {
     const { data: user } = yield call(repository.saveAvatar, payload);
 
@@ -154,6 +199,11 @@ function* getChangeAvatarSaga({ payload }) {
       description: err.message,
     });
   }
+
+  yield put({
+    type: "@utilities/LOADING",
+    payload: { loading: false },
+  });
 }
 
 export default all([

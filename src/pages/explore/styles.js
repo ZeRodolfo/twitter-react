@@ -76,3 +76,16 @@ export const Link = styled(Anchor)`
     text-decoration: underline;
   }
 `;
+
+export const Logo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+
+  svg {
+    width: 100px;
+    height: 100px;
+    fill: rgba(29, 161, 242, 1);
+  }
+`;

@@ -5,6 +5,8 @@ import { connect, useDispatch } from "react-redux";
 
 import * as Styled from "./styles";
 
+import { ReactComponent as Logo } from "../../assets/svg/logo.svg";
+
 import FormLogin from "../../components/formLogin";
 import ListTweets from "../../components/listTweets";
 
@@ -34,7 +36,7 @@ function Explore({ name = "Hooks", history, currentUser, listTweets }) {
         <ListTweets list={listTweets} fallbackSelectUser={selectUserHandle} />
       </Styled.ContainerTweets>
       <Styled.ContainerLogin>
-        {!!currentUser.username === false && (
+        {!!currentUser.username === false ? (
           <>
             <Styled.Title>Entrar no Twitter</Styled.Title>
             <FormLogin fallbackSubmit={submitFormHandle} />
@@ -44,6 +46,10 @@ function Explore({ name = "Hooks", history, currentUser, listTweets }) {
               <Styled.Link to="/register">Inscrever-se no Twitter</Styled.Link>
             </Styled.ContainerLink>
           </>
+        ) : (
+          <Styled.Logo>
+            <Logo />
+          </Styled.Logo>
         )}
       </Styled.ContainerLogin>
     </Styled.Container>
