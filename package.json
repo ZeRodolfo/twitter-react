@@ -13,7 +13,7 @@
     "@typescript-eslint/eslint-plugin": "2.x",
     "@typescript-eslint/parser": "2.x",
     "antd": "^4.2.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-preset-react-app": "^8.0.0",
     "connected-react-router": "^6.8.0",
     "dotenv": "^8.2.0",
